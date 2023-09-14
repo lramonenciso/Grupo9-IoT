@@ -1,0 +1,644 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 3,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "gbmdFRiIz"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 14,
+          "w": 17,
+          "x": 0,
+          "y": 0
+        },
+        "id": 8,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.5.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "gbmdFRiIz"
+            },
+            "query": "from(bucket: \"iotdata\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"sensor_temperature\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+            "refId": "A"
+          }
+        ],
+        "title": "Monitoreo de temperatura",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {},
+              "renameByName": {
+                "Time": "Time",
+                "value {client_id=\"c03d5155\", date=\"2023-09-11\", device_id=\"sensor_temperature\", host=\"telegrafinput\", path=\"/tmp/mocksensor/ouput_mock_sensor.json\", project=\"iotcrashcourse\", topic=\"telegraf/telegrafinput/Temperature\"}": "Temperatura",
+                "value {client_id=\"c03d5155\", device_id=\"sensor_temperature\", host=\"telegrafinput\", path=\"/tmp/mocksensor/ouput_mock_sensor.json\", project=\"iotcrashcourse\", topic=\"telegraf/telegrafinput/Temperature\"}": "Temperatura"
+              }
+            }
+          }
+        ],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "gbmdFRiIz"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "decimals": 0,
+            "mappings": [],
+            "max": 55,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "blue",
+                  "value": null
+                },
+                {
+                  "color": "dark-green",
+                  "value": 20
+                },
+                {
+                  "color": "red",
+                  "value": 35
+                }
+              ]
+            },
+            "unit": "celsius"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 14,
+          "w": 7,
+          "x": 17,
+          "y": 0
+        },
+        "id": 10,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": true,
+          "showThresholdMarkers": true,
+          "text": {
+            "valueSize": 150
+          }
+        },
+        "pluginVersion": "8.5.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "gbmdFRiIz"
+            },
+            "query": "from(bucket: \"iotdata\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"sensor_temperature\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+            "refId": "A"
+          }
+        ],
+        "title": "Temperatura Actual",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {},
+              "renameByName": {
+                "Time": "Time",
+                "value {client_id=\"c03d5155\", date=\"2023-09-11\", device_id=\"sensor_temperature\", host=\"telegrafinput\", path=\"/tmp/mocksensor/ouput_mock_sensor.json\", project=\"iotcrashcourse\", topic=\"telegraf/telegrafinput/Temperature\"}": "Temperatura"
+              }
+            }
+          }
+        ],
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "gbmdFRiIz"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds",
+              "seriesBy": "last"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 20,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 3,
+              "pointSize": 8,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "always",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "noValue": "Temperatura",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "blue",
+                  "value": null
+                },
+                {
+                  "color": "dark-green",
+                  "value": 20
+                },
+                {
+                  "color": "red",
+                  "value": 35
+                }
+              ]
+            },
+            "unit": "celsius"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 14
+        },
+        "id": 2,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "hidden",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.5.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "gbmdFRiIz"
+            },
+            "query": "data = () =>\r\n    from(bucket: \"iotdata\")\r\n        |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n        |> filter(fn: (r) => r[\"device_id\"] == \"sensor_temperature\")\r\n\r\nmin =\r\n    data()\r\n        |> aggregateWindow(every: 1d, fn: min, createEmpty: false)\r\n        |> set(key: \"_field\", value: \"min_Compteur\")\r\n\r\nmax =\r\n    data()\r\n        |> aggregateWindow(every: 1d, fn: max, createEmpty: false)\r\n        |> set(key: \"_field\", value: \"max_Compteur\")\r\n\r\nunion(tables: [min, max])",
+            "refId": "A"
+          }
+        ],
+        "title": "Monitoreo de (Tmax - Tmin) diario",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "_measurement {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": false,
+                "client_id {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "device_id {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "host {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "path {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "project {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "topic {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true
+              },
+              "indexByName": {},
+              "renameByName": {
+                "_field {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Campo",
+                "_field {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": "Field",
+                "_field {_start=\"2023-09-11 06:53:04.657 +0000 UTC\", _stop=\"2023-09-11 18:53:04.657 +0000 UTC\", date=\"2023-09-11\"}": "",
+                "_measurement {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Type_sensor",
+                "_measurement {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": "Sensor_type",
+                "_measurement {_start=\"2023-09-11 12:07:00.302 +0000 UTC\", _stop=\"2023-09-11 18:07:00.302 +0000 UTC\", date=\"2023-09-11\"}": "",
+                "_time": "Tiempo",
+                "_value {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Temeperatura",
+                "_value {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": "Valor",
+                "_value {_start=\"2023-09-11 06:02:16.896 +0000 UTC\", _stop=\"2023-09-11 18:02:16.896 +0000 UTC\", date=\"2023-09-11\"}": "",
+                "_value {_start=\"2023-09-11 06:48:25.938 +0000 UTC\", _stop=\"2023-09-11 18:48:25.938 +0000 UTC\", date=\"2023-09-11\"}": "",
+                "_value {_start=\"2023-09-11 06:52:55.624 +0000 UTC\", _stop=\"2023-09-11 18:52:55.624 +0000 UTC\", date=\"2023-09-11\"}": "Temperatura",
+                "_value {_start=\"2023-09-11 06:53:04.657 +0000 UTC\", _stop=\"2023-09-11 18:53:04.657 +0000 UTC\", date=\"2023-09-11\"}": "Temperatura",
+                "_value {_start=\"2023-09-11 06:53:17.447 +0000 UTC\", _stop=\"2023-09-11 18:53:17.447 +0000 UTC\", date=\"2023-09-11\"}": "Temperatura",
+                "_value {_start=\"2023-09-11 12:52:39.532 +0000 UTC\", _stop=\"2023-09-11 18:52:39.532 +0000 UTC\", date=\"2023-09-11\"}": "Temperatura",
+                "_value {_start=\"2023-09-11 15:34:22.874 +0000 UTC\", _stop=\"2023-09-11 21:34:22.874 +0000 UTC\"}": "Temperatura",
+                "client_id {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Client_id",
+                "device_id {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Device_id",
+                "host {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Host",
+                "path {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Path",
+                "project {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Project",
+                "topic {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Topic"
+              }
+            }
+          }
+        ],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "gbmdFRiIz"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "yellow",
+              "mode": "fixed"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 20,
+              "gradientMode": "scheme",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 3,
+              "pointSize": 11,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "always",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "yellow",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 35
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 17,
+          "x": 0,
+          "y": 22
+        },
+        "id": 11,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.5.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "gbmdFRiIz"
+            },
+            "query": "data = () =>\r\n    from(bucket: \"iotdata\")\r\n        |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n        |> filter(fn: (r) => r[\"device_id\"] == \"sensor_temperature\")\r\n        |> group(columns: [\"date\"])\r\n\r\nmin =\r\n    data()\r\n        |> aggregateWindow(every: 1d, fn: min, createEmpty: false)\r\n        |> set(key: \"_field\", value: \"min_Compteur\")\r\n\r\nmax =\r\n    data()\r\n        |> aggregateWindow(every: 1d, fn: max, createEmpty: false)\r\n        |> set(key: \"_field\", value: \"max_Compteur\")\r\n\r\nunion(tables: [min, max])\r\n    |> group(columns: [\"Tiempo\"], mode:\"by\")\r\n    |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\r\n    |> map(fn: (r) => ({ r with _value: (r._value / 2.0) - 15.0 }))\r\n",
+            "refId": "A"
+          }
+        ],
+        "title": "Monitoreo de GDD diario",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "_measurement {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": false,
+                "client_id {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "device_id {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "host {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "path {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "project {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true,
+                "topic {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": true
+              },
+              "indexByName": {},
+              "renameByName": {
+                "Time": "Fecha",
+                "Value": "GDD",
+                "_field {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Campo",
+                "_field {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": "Field",
+                "_field {_start=\"2023-09-11 06:53:04.657 +0000 UTC\", _stop=\"2023-09-11 18:53:04.657 +0000 UTC\", date=\"2023-09-11\"}": "",
+                "_measurement {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Type_sensor",
+                "_measurement {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": "Sensor_type",
+                "_measurement {_start=\"2023-09-11 12:07:00.302 +0000 UTC\", _stop=\"2023-09-11 18:07:00.302 +0000 UTC\", date=\"2023-09-11\"}": "",
+                "_time": "Tiempo",
+                "_value {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Temeperatura",
+                "_value {_start=\"2023-08-13 15:08:55.485 +0000 UTC\", _stop=\"2023-09-12 15:08:55.485 +0000 UTC\"}": "Valor",
+                "_value {_start=\"2023-09-11 06:02:16.896 +0000 UTC\", _stop=\"2023-09-11 18:02:16.896 +0000 UTC\", date=\"2023-09-11\"}": "",
+                "_value {_start=\"2023-09-11 06:48:25.938 +0000 UTC\", _stop=\"2023-09-11 18:48:25.938 +0000 UTC\", date=\"2023-09-11\"}": "",
+                "_value {_start=\"2023-09-11 06:52:55.624 +0000 UTC\", _stop=\"2023-09-11 18:52:55.624 +0000 UTC\", date=\"2023-09-11\"}": "Temperatura",
+                "_value {_start=\"2023-09-11 06:53:04.657 +0000 UTC\", _stop=\"2023-09-11 18:53:04.657 +0000 UTC\", date=\"2023-09-11\"}": "Temperatura",
+                "_value {_start=\"2023-09-11 06:53:17.447 +0000 UTC\", _stop=\"2023-09-11 18:53:17.447 +0000 UTC\", date=\"2023-09-11\"}": "Temperatura",
+                "_value {_start=\"2023-09-11 12:52:39.532 +0000 UTC\", _stop=\"2023-09-11 18:52:39.532 +0000 UTC\", date=\"2023-09-11\"}": "Temperatura",
+                "_value {_start=\"2023-09-11 15:34:22.874 +0000 UTC\", _stop=\"2023-09-11 21:34:22.874 +0000 UTC\"}": "Temperatura",
+                "client_id {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Client_id",
+                "device_id {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Device_id",
+                "host {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Host",
+                "path {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Path",
+                "project {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Project",
+                "topic {_start=\"2023-08-13 12:47:01.483 +0000 UTC\", _stop=\"2023-09-12 12:47:01.483 +0000 UTC\"}": "Topic"
+              }
+            }
+          }
+        ],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "gbmdFRiIz"
+        },
+        "description": "La cantidad de GDD a alcanzar para el tomate es de un valor de 900",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 900,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "yellow",
+                  "value": null
+                },
+                {
+                  "color": "dark-green",
+                  "value": 900
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 7,
+          "x": 17,
+          "y": 22
+        },
+        "id": 6,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "sum"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "value"
+        },
+        "pluginVersion": "8.5.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "gbmdFRiIz"
+            },
+            "query": "data = () =>\r\n    from(bucket: \"iotdata\")\r\n        |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n        |> filter(fn: (r) => r[\"device_id\"] == \"sensor_temperature\")\r\n        |> group(columns: [\"date\"])\r\n\r\nmin =\r\n    data()\r\n        |> aggregateWindow(every: 1d, fn: min, createEmpty: false)\r\n        |> set(key: \"_field\", value: \"min_Compteur\")\r\n\r\nmax =\r\n    data()\r\n        |> aggregateWindow(every: 1d, fn: max, createEmpty: false)\r\n        |> set(key: \"_field\", value: \"max_Compteur\")\r\n\r\nunion(tables: [min, max])\r\n    |> group()\r\n    |> sum()\r\n    |> map(fn: (r) => ({ r with _value: r._value / 2.0 }))\r\n    |> map(fn: (r) => ({ r with _value: r._value - 15.0 }))",
+            "refId": "A"
+          }
+        ],
+        "title": "GDD acumulado",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": false
+              },
+              "indexByName": {},
+              "renameByName": {
+                "Time": "Time",
+                "value {client_id=\"c03d5155\", device_id=\"sensor_temperature\", host=\"telegrafinput\", path=\"/tmp/mocksensor/ouput_mock_sensor.json\", project=\"iotcrashcourse\", topic=\"telegraf/telegrafinput/Temperature\"}": "GDD"
+              }
+            }
+          },
+          {
+            "id": "groupBy",
+            "options": {
+              "fields": {
+                "GDD": {
+                  "aggregations": [
+                    "sum"
+                  ],
+                  "operation": "aggregate"
+                },
+                "Time": {
+                  "aggregations": []
+                },
+                "Value": {
+                  "aggregations": [
+                    "sum"
+                  ],
+                  "operation": "aggregate"
+                }
+              }
+            }
+          },
+          {
+            "id": "configFromData",
+            "options": {
+              "applyTo": {
+                "id": "byName",
+                "options": "GDD"
+              },
+              "configRefId": "A",
+              "mappings": [
+                {
+                  "fieldName": "Time",
+                  "handlerKey": "__ignore",
+                  "reducerId": "sum"
+                },
+                {
+                  "fieldName": "GDD",
+                  "handlerKey": "field.value",
+                  "reducerId": "sum"
+                }
+              ]
+            }
+          }
+        ],
+        "type": "stat"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 30
+        },
+        "id": 4,
+        "panels": [],
+        "title": "Row title",
+        "type": "row"
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 36,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-30d",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Grupo9-IoT",
+    "uid": "wqdTxZmIk",
+    "version": 22,
+    "weekStart": ""
+  }
