@@ -67,12 +67,18 @@ def main():
         #print(relay_data)
         with open('/tmp/ouput_mock_sensor.json', 'a') as output_file:
             output_file.write(f'{json.dumps(temperature_data)}\n')
-            #output_file.write(f'{json.dumps(relay_data1)}\n')
-            #output_file.write(f'{json.dumps(relay_data2)}\n')
         
+        temperature_data["timestamp"] = tiempo_inicial_unix
+
+        with open('/tmp/ouput_mock_sensor.json', 'a') as output_file:
+            output_file.write(f'{json.dumps(relay_data1)}\n')
+
+        with open('/tmp/ouput_mock_sensor.json', 'a') as output_file:
+            output_file.write(f'{json.dumps(relay_data2)}\n')
+
         relay_data1["timestamp"] = tiempo_inicial_unix
         relay_data2["timestamp"] = tiempo_inicial_unix
-        temperature_data["timestamp"] = tiempo_inicial_unix
+
         time.sleep(10)
 
 if __name__ == '__main__':
