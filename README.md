@@ -17,6 +17,9 @@ Está orientado a desplegar un entorno IoT básico que permita recoger los datos
 * https://github.com/lramonenciso/Grupo9-IoT/blob/main/flux_example_query
 * https://github.com/lramonenciso/Grupo9-IoT/blob/main/grafana_model.json
 
+## Prototipo minimo aplicado 
+* https://github.com/lramonenciso/Grupo9-IoT/blob/main/prototype/
+
 ## Despliegue
 
 ```
